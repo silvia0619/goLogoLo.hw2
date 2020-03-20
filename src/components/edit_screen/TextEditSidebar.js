@@ -11,13 +11,16 @@ class TextEditSidebar extends Component {
             text : props.logo.text,
             textColor : props.logo.textColor,
             fontSize : props.logo.fontSize,
-            backgroundColor : props.logo.backgroundColor
+            backgroundColor : props.logo.backgroundColor,
+            borderColor : props.logo.borderColor,
+            borderRadius : props.logo.borderRadius,
+            borderThickness : props.logo.borderThickness
         }
     }
 
     handleTextChange = () => {
         console.log("handleTextChange to ", "dont know yet");
-        this.props.changeLogoCallback(this.props.logo, this.props.logo.key, "New Text", this.state.textColor, this.state.fontSize, this.state.backgroundColor);
+        this.props.changeLogoCallback(this.props.logo, this.props.logo.key, "New Text", this.state.textColor, this.state.fontSize, this.state.backgroundColor, this.state.borderColor, this.state.borderRadius, this.state.borderThickness);
     }
 
 
@@ -43,10 +46,28 @@ class TextEditSidebar extends Component {
         this.setState({ backgroundColor: event.target.value }, this.completeUserEditing);
     }
 
+    handleBorderColorChange = (event) => {
+        console.log("handleBorderColorChange to " + event.target.value);
+        this.setState({ borderColor: event.target.value }, this.completeUserEditing);
+    }
+
+    handleBorderRadiusChange = (event) => {
+        console.log("handleBorderRadiusChangeComplete to " + event.target.value);
+        this.setState({ borderRadius: event.target.value }, this.completeUserEditing);
+    }
+
+    handleBorderThicknessChange = (event) => {
+        console.log("handleBorderWidthChangeComplete to " + event.target.value);
+        this.setState({ borderThickness: event.target.value }, this.completeUserEditing);
+        var rangeslider = document.getElementById("sliderRange"); 
+        var output = document.getElementById("demo");
+        output = this.value;
+    }
+
     completeUserEditing = () => {
         console.log("completeUserEditing");
         console.log("this.state.textColor: " + this.state.textColor);
-        this.props.changeLogoCallback(this.props.logo, this.props.logo.key, this.props.logo.text, this.state.textColor, this.state.fontSize, this.state.backgroundColor);
+        this.props.changeLogoCallback(this.props.logo, this.props.logo.key, this.props.logo.text, this.state.textColor, this.state.fontSize, this.state.backgroundColor, this.state.borderColor, this.state.borderRadius, this.state.borderThickness);
     }
 
     render() {
@@ -97,6 +118,35 @@ class TextEditSidebar extends Component {
                                         value={this.props.logo.backgroundColor}
                                         id="backgroundColorSlider"
                                 />
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col s4">Border Color:</div>
+                            <div className="col s8">
+                                <input type="color"
+                                        onChange={this.handleBorderColorChange}
+                                        value={this.props.logo.borderColor}
+                                        id="borderColorSlider"
+                                />
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col s4">Border Radius:</div>
+                            <div className="col s8">
+                                <input type="range" min="4" max="144" 
+                                    onChange={this.handleBorderRadiusChange}
+                                    value={this.props.logo.borderRadius}
+                                />
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col s4">Border Thickness:</div>
+                            <div className="col s8">
+                                <input type="range" min="4" max="144" 
+                                    onChange={this.handleBorderThicknessChange}
+                                    value={this.props.logo.borderThickness}
+                                />
+                                <p>Value: <span id="demo"></span></p>
                             </div>
                         </div>
                     </div>

@@ -24,7 +24,10 @@ export const LogoDefaults = {
   TEXT : "goLogoLo Logo",
   TEXT_COLOR : "#FF0000",
   FONT_SIZE : 24,
-  BACKGROUOND_COLOR : "#F00000" 
+  BACKGROUOND_COLOR : "#F00000",
+  BORDER_COLOR : "#FFF000",
+  BORDER_RADIUS : 5,
+  BORDER_WIDTH : 6
 }
 
 // App IS THE ROOT REACT COMPONENT
@@ -86,7 +89,7 @@ class App extends Component {
         highKey = arrayElement.key;
     });
     highKey++;
-    return highKey;
+    return highKey; 
   }
 
   // THERE ARE TWO NAVIGATION METHODS
@@ -146,7 +149,7 @@ class App extends Component {
    * to do the actual work of changing the logo. Note that this function will also
    * then add the built transaction to the stack and execute it.
    */
-  buildChangeLogoTransaction = (oldLogo, logoKey, newText, newTextColor, newFontSize, newBackgroundColor) => {
+  buildChangeLogoTransaction = (oldLogo, logoKey, newText, newTextColor, newFontSize, newBackgroundColor, newBorderColor, newBorderRadius, newBorderThickness) => {
     // THIS WILL BE THE LOGO AFTER THE CHANGE HAPPENS, NOTE WE BUILD
     // AN ENTIRELY NEW LOGO EACH TIME BUT IT SHOULD KEEP THE SAME KEY
     let postEditLogo = {
@@ -154,7 +157,10 @@ class App extends Component {
       text: newText,
       textColor: newTextColor,
       fontSize: newFontSize,
-      backgroundColor : newBackgroundColor
+      backgroundColor : newBackgroundColor,
+      borderColor : newBorderColor,
+      borderRadius : newBorderRadius,
+      borderThickness : newBorderThickness
     };
 
     // NOW BUILD THE TRANSACTION OBJECT
@@ -232,7 +238,10 @@ class App extends Component {
       text: LogoDefaults.TEXT,
       textColor: LogoDefaults.TEXT_COLOR,
       fontSize: LogoDefaults.FONT_SIZE,
-      backgroundColor : LogoDefaults.BACKGROUOND_COLOR
+      backgroundColor : LogoDefaults.BACKGROUOND_COLOR,
+      borderColor : LogoDefaults.BORDER_COLOR,
+      borderRadius : LogoDefaults.BORDER_RADIUS,
+      borderThickness : LogoDefaults.BORDER_WIDTH
     }
     return newLogo;
   }
@@ -319,6 +328,9 @@ class App extends Component {
     text += "\ttextColor: " + logoToDisplay.textColor + "\n";
     text += "\tfontSize: " + logoToDisplay.fontSize + "\n";
     text += "\tbackgroundColor: " + logoToDisplay.backgroundColor + "\n";
+    text += "\tborderColor: " + logoToDisplay.borderColor + "\n";
+    text += "\tborderRadius: " + logoToDisplay.borderRadius + "\n";
+    text += "\tborderWidth: " + logoToDisplay.borderThickness + "\n";
     text += "}";
     return text;
   }
