@@ -23,7 +23,8 @@ export const TransactionType = {
 export const LogoDefaults = {
   TEXT : "goLogoLo Logo",
   TEXT_COLOR : "#FF0000",
-  FONT_SIZE : 24
+  FONT_SIZE : 24,
+  BACKGROUOND_COLOR : "#F00000" 
 }
 
 // App IS THE ROOT REACT COMPONENT
@@ -145,14 +146,15 @@ class App extends Component {
    * to do the actual work of changing the logo. Note that this function will also
    * then add the built transaction to the stack and execute it.
    */
-  buildChangeLogoTransaction = (oldLogo, logoKey, newText, newTextColor, newFontSize) => {
+  buildChangeLogoTransaction = (oldLogo, logoKey, newText, newTextColor, newFontSize, newBackgroundColor) => {
     // THIS WILL BE THE LOGO AFTER THE CHANGE HAPPENS, NOTE WE BUILD
     // AN ENTIRELY NEW LOGO EACH TIME BUT IT SHOULD KEEP THE SAME KEY
     let postEditLogo = {
       key: logoKey,
       text: newText,
       textColor: newTextColor,
-      fontSize: newFontSize
+      fontSize: newFontSize,
+      backgroundColor : newBackgroundColor
     };
 
     // NOW BUILD THE TRANSACTION OBJECT
@@ -173,6 +175,10 @@ class App extends Component {
     this.tps.undoTransaction();
   }
 
+  redo = () => {
+    this.tps.doTransaction();
+  }
+
   /**
    * resetTransactions - This method clears all the transactions in
    * the undo/redo stack, which should be done every time the logo
@@ -189,6 +195,10 @@ class App extends Component {
    */
   canUndo = () => {
     return this.tps.hasTransactionToUndo();
+  }
+
+  canRedo = () => {
+    return this.tps.hasTransactionToRedo();
   }
 
   // THERE ARE SEVEN FUNCTIONS FOR UPDATING THE App state, TWO OF
@@ -221,7 +231,8 @@ class App extends Component {
       key: this.getHighKey(this.state.logos),
       text: LogoDefaults.TEXT,
       textColor: LogoDefaults.TEXT_COLOR,
-      fontSize: LogoDefaults.FONT_SIZE
+      fontSize: LogoDefaults.FONT_SIZE,
+      backgroundColor : LogoDefaults.BACKGROUOND_COLOR
     }
     return newLogo;
   }
@@ -307,6 +318,7 @@ class App extends Component {
     text += "\ttext: " + logoToDisplay.text + "\n";
     text += "\ttextColor: " + logoToDisplay.textColor + "\n";
     text += "\tfontSize: " + logoToDisplay.fontSize + "\n";
+    text += "\tbackgroundColor: " + logoToDisplay.backgroundColor + "\n";
     text += "}";
     return text;
   }
@@ -342,11 +354,15 @@ class App extends Component {
       case AppScreen.EDIT_SCREEN:
         return <EditScreen
           logo={this.state.currentLogo}                         // DATA NEEDED BY THIS COMPONENT AND ITS DESCENDANTS
+          textChangeCallback={this.editText}
           goToHomeCallback={this.goToHomeScreen}                    // NAVIGATION CALLBACK
+          deleteLogoCallback={this.deleteLogo}
           changeLogoCallback={this.buildChangeLogoTransaction}  // TRANSACTION CALLBACK
           undoCallback={this.undo}                        // TRANSACTION CALLBACK                       
           canUndo={this.canUndo}                          // TRANSACTION CALLBACK
 
+          redoCallback={this.redo}                        // TRANSACTION CALLBACK                       
+          canRedo={this.canRedo}                          // TRANSACTION CALLBACK
         />;
       default:
         return <div></div>;
