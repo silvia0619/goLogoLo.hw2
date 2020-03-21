@@ -22,7 +22,7 @@ class Navbar extends React.Component {
 
   handleDelete = () => {
     console.log("handleDelete");
-    this.props.deleteModalCallback();
+    this.props.deleteLogoCallback();
   }
 
   render() {

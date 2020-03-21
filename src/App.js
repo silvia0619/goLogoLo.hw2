@@ -27,7 +27,9 @@ export const LogoDefaults = {
   BACKGROUOND_COLOR : "#F00000",
   BORDER_COLOR : "#FFF000",
   BORDER_RADIUS : 5,
-  BORDER_WIDTH : 6
+  BORDER_WIDTH : 6,
+  PADDING : 4,
+  MARGIN : 5
 }
 
 // App IS THE ROOT REACT COMPONENT
@@ -149,7 +151,7 @@ class App extends Component {
    * to do the actual work of changing the logo. Note that this function will also
    * then add the built transaction to the stack and execute it.
    */
-  buildChangeLogoTransaction = (oldLogo, logoKey, newText, newTextColor, newFontSize, newBackgroundColor, newBorderColor, newBorderRadius, newBorderThickness) => {
+  buildChangeLogoTransaction = (oldLogo, logoKey, newText, newTextColor, newFontSize, newBackgroundColor, newBorderColor, newBorderRadius, newBorderThickness, newPadding, newMargin) => {
     // THIS WILL BE THE LOGO AFTER THE CHANGE HAPPENS, NOTE WE BUILD
     // AN ENTIRELY NEW LOGO EACH TIME BUT IT SHOULD KEEP THE SAME KEY
     let postEditLogo = {
@@ -160,7 +162,9 @@ class App extends Component {
       backgroundColor : newBackgroundColor,
       borderColor : newBorderColor,
       borderRadius : newBorderRadius,
-      borderThickness : newBorderThickness
+      borderThickness : newBorderThickness,
+      padding : newPadding,
+      margin : newMargin
     };
 
     // NOW BUILD THE TRANSACTION OBJECT
@@ -241,7 +245,9 @@ class App extends Component {
       backgroundColor : LogoDefaults.BACKGROUOND_COLOR,
       borderColor : LogoDefaults.BORDER_COLOR,
       borderRadius : LogoDefaults.BORDER_RADIUS,
-      borderThickness : LogoDefaults.BORDER_WIDTH
+      borderThickness : LogoDefaults.BORDER_WIDTH,
+      padding : LogoDefaults.PADDING,
+      margin : LogoDefaults.MARGIN
     }
     return newLogo;
   }
@@ -331,6 +337,8 @@ class App extends Component {
     text += "\tborderColor: " + logoToDisplay.borderColor + "\n";
     text += "\tborderRadius: " + logoToDisplay.borderRadius + "\n";
     text += "\tborderWidth: " + logoToDisplay.borderThickness + "\n";
+    text += "\tpadding: " + logoToDisplay.padding + "\n";
+    text += "\tmargin: " + logoToDisplay.margin + "\n";
     text += "}";
     return text;
   }
